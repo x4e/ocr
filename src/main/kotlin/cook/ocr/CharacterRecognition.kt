@@ -1,28 +1,25 @@
 package cook.ocr
 
-import java.awt.Color
-import java.awt.Image
+import cook.ocr.preprocessors.BWConversion
+import cook.ocr.preprocessors.ImageTrim
+import cook.ocr.preprocessors.NoiseReduction
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
 
-object CharacterRecognition {
-	fun init(image_: BufferedImage) {
-		var image = image_
-		// Scale to 32 pixels
-		//val scaledIage = image.getScaledInstance(64, 64, Image.SCALE_DEFAULT)
-		BufferedImage(
-				image.width,
-				image.height,
-				BufferedImage.TYPE_BYTE_BINARY // Black and white
-		).also {newImage ->
-			newImage.createGraphics().apply {
-				drawImage(image, 0, 0, Color.WHITE, null)
-				dispose()
-			}
-			image = newImage
+class CharacterRecognition(var image: BufferedImage) {
+	init {
+		val processors = arrayOf(
+			BWConversion,
+			NoiseReduction
+			//ImageTrim
+		)
+		
+		for (processor in processors) {
+			image = processor.process(image)
 		}
+		
 		
 		val output = File("output.png")
 		ImageIO.write(image, "png", output)
