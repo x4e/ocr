@@ -6,9 +6,6 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.awt.image.DataBufferByte
 
-/**
- * @author cookiedragon234 04/Mar/2020
- */
 object NoiseReduction: Processor {
 	private const val threshold = 6
 	
