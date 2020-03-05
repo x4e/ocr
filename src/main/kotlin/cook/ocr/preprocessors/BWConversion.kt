@@ -4,9 +4,6 @@ import cook.ocr.Processor
 import java.awt.Color
 import java.awt.image.BufferedImage
 
-/**
- * @author cookiedragon234 04/Mar/2020
- */
 object BWConversion : Processor {
 	override fun process(img: BufferedImage): BufferedImage {
 		// convert image to black and white
