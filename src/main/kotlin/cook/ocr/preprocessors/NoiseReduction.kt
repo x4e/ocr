@@ -7,7 +7,9 @@ import java.awt.image.BufferedImage
 import java.awt.image.DataBufferByte
 
 object NoiseReduction: Processor {
-	private const val threshold = 6
+	private const val THRESHOLD = 6
+	private const val WHITE = 0xFFFFFF
+	private const val BLACK = 0
 	
 	override fun process(image: BufferedImage): BufferedImage {
 		val width = image.width
@@ -28,8 +30,8 @@ object NoiseReduction: Processor {
 					
 					println(numSurrounding)
 					
-					if (numSurrounding < threshold) {
-						image.setRGB(x, y, Color.WHITE.rgb)
+					if (numSurrounding < THRESHOLD) {
+						image.setRGB(x, y, WHITE)
 					}
 				}
 			}
@@ -41,8 +43,8 @@ object NoiseReduction: Processor {
 	private fun BufferedImage.isBlack(x: Int, y: Int): Boolean {
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height) return false
 		
-		return isBlack(Color(getRGB(x, y)))
+		return isBlack(getRGB(x, y))
 	}
 	
-	private inline fun isBlack(color: Color) = color.rgb == Color.BLACK.rgb
+	private inline fun isBlack(rgb: Int): Boolean = (rgb == BLACK)
 }
