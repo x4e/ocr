@@ -12,8 +12,8 @@ class CharacterRecognition(var image: BufferedImage) {
 	init {
 		val processors = arrayOf(
 			BWConversion,
-			NoiseReduction
-			//ImageTrim
+			NoiseReduction,
+			ImageTrim
 		)
 		
 		for (processor in processors) {
