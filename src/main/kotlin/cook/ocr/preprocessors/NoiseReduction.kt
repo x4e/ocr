@@ -31,24 +31,31 @@ object NoiseReduction: Processor {
 		return image
 	}
 	
-	private fun BufferedImage.countSurrounding(ignores: MutableSet<Pair<Int, Int>>, coords: Pair<Int, Int>, total: Int): Int {
-		var total = total
-		
-		if (ignores.add(coords)) {
-			if (isBlack(coords.first, coords.second)) {
-				total += 1
-				
-				for (_x in (coords.first - 2)..(coords.first + 2)) {
-					for (_y in (coords.second - 2)..(coords.second + 2)) {
-						val pair = Pair(_x, _y)
-						if (!ignores.contains(pair)) {
-							total = countSurrounding(ignores, pair, total)
-						}
+	val dxdy = arrayOf(0 to 1, 0 to -1, 1 to 0, 1 to 1, 1 to -1, -1 to 0, -1 to 1, -1 to -1)
+	
+	private fun BufferedImage.countSurrounding(x: Int, y: Int): Int {
+		val ignored = hashSetOf()
+		var num = 0
+		val queue = Queue<Pair<Int, Int>>()
+		if (isBlack(x, y)) {
+			val pair = Pair(x, y)
+			queue.put(pair)
+			ignored.add(pair)
+		}
+		while (!queue.isEmpty()) {
+			val new = queue.get()
+			num += 1
+			
+			for ((dx, dy) in dxdy) {
+				val pair = Pair(new.first + dx, new.second + dy)
+				if (isBlack(pair.first, pair.second)) {
+					if (ignored.add(pair)) {
+						queue.put(pair)
 					}
 				}
 			}
 		}
-		return total
+		return num
 	}
 	
 	private fun BufferedImage.isBlack(x: Int, y: Int): Boolean {
