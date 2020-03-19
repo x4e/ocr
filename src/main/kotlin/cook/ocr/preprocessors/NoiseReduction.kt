@@ -12,23 +12,16 @@ object NoiseReduction: Processor {
 	override fun process(image: BufferedImage): BufferedImage {
 		val width = image.width
 		val height = image.height
+		val ignores = mutableSetOf<Pair<Int, Int>>()
 		
 		for (x in 0 until width) {
 			for (y in 0 until height) {
 				if (image.isBlack(x, y)) {
-					var numSurrounding = 0
-					
-					for (_x in -2..2) {
-						for (_y in -2..2) {
-							if(image.isBlack(x + _x, y + _y)) {
-								numSurrounding += 1
-							}
-						}
-					}
+					val numSurrounding = image.countSurrounding(ignores, Pair(x, y), 0)
 					
 					println(numSurrounding)
 					
-					if (numSurrounding < threshold) {
+					if (numSurrounding < 1) {
 						image.setRGB(x, y, Color.WHITE.rgb)
 					}
 				}
@@ -38,11 +31,31 @@ object NoiseReduction: Processor {
 		return image
 	}
 	
+	private fun BufferedImage.countSurrounding(ignores: MutableSet<Pair<Int, Int>>, coords: Pair<Int, Int>, total: Int): Int {
+		var total = total
+		
+		if (ignores.add(coords)) {
+			if (isBlack(coords.first, coords.second)) {
+				total += 1
+				
+				for (_x in (coords.first - 2)..(coords.first + 2)) {
+					for (_y in (coords.second - 2)..(coords.second + 2)) {
+						val pair = Pair(_x, _y)
+						if (!ignores.contains(pair)) {
+							total = countSurrounding(ignores, pair, total)
+						}
+					}
+				}
+			}
+		}
+		return total
+	}
+	
 	private fun BufferedImage.isBlack(x: Int, y: Int): Boolean {
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height) return false
 		
-		return isBlack(Color(getRGB(x, y)))
+		return isBlack(getRGB(x, y))
 	}
 	
-	private inline fun isBlack(color: Color) = color.rgb == Color.BLACK.rgb
+	private inline fun isBlack(rgb: Int) = rgb == Color.BLACK.rgb
 }
