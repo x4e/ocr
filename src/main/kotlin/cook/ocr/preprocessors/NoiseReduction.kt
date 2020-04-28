@@ -1,32 +1,30 @@
 package cook.ocr.preprocessors
 
 import cook.ocr.Processor
-import cook.ocr.preprocessors.NoiseReduction.isBlack
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.awt.image.DataBufferByte
 import java.util.*
 
 object NoiseReduction: Processor {
 	private const val threshold = 12
 	
-	override fun process(image: BufferedImage): BufferedImage {
-		val width = image.width
-		val height = image.height
+	override fun process(img: BufferedImage): BufferedImage {
+		val width = img.width
+		val height = img.height
 		
 		for (x in 0 until width) {
 			for (y in 0 until height) {
-				if (image.isBlack(x, y)) {
-					val numSurrounding = image.countSurrounding(x, y)
+				if (img.isBlack(x, y)) {
+					val numSurrounding = img.countSurrounding(x, y)
 					
 					if (numSurrounding < threshold) {
-						image.setRGB(x, y, Color.WHITE.rgb)
+						img.setRGB(x, y, Color.WHITE.rgb)
 					}
 				}
 			}
 		}
 		
-		return image
+		return img
 	}
 	
 	val dxdy = arrayOf(0 to 1, 0 to -1, 1 to 0, 1 to 1, 1 to -1, -1 to 0, -1 to 1, -1 to -1)

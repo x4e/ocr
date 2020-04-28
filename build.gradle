@@ -1,9 +1,9 @@
 plugins {
-	id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+	id "org.jetbrains.kotlin.jvm" version "1.3.21"
 }
 
-group 'cookiedragon'
-version '1.0-SNAPSHOT'
+group "cookiedragon"
+version "1.0-SNAPSHOT"
 
 repositories {
 	mavenCentral()
@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+	compile "org.deeplearning4j:deeplearning4j-core:1.0.0-beta6"
+    compile "org.nd4j:nd4j-native-platform:1.0.0-beta6"
 }
 
 compileKotlin {
@@ -22,10 +24,16 @@ compileTestKotlin {
 
 jar {
 	manifest {
-		attributes 'Main-Class': "cook.ocr.EntryPointKt"
+		attributes "Main-Class": "cook.ocr.EntryPointKt"
 	}
+    baseName = ""
+    version = ""
+    classifier = "ocr"
+}
 
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+task dependencyJar(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    classifier = "dependencies"
 }
 
 build.dependsOn(jar)

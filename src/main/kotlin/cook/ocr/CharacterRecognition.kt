@@ -1,28 +1,26 @@
 package cook.ocr
 
-import cook.ocr.preprocessors.BWConversion
-import cook.ocr.preprocessors.ImageTrim
-import cook.ocr.preprocessors.NoiseReduction
+import cook.ocr.preprocessors.*
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
 
-class CharacterRecognition(var image: BufferedImage) {
-	init {
+object CharacterRecognition {
+	fun preprocess(image_: BufferedImage): BufferedImage {
+		var image = image_
 		val processors = arrayOf(
+			//ImageResizer,
 			BWConversion,
 			NoiseReduction,
-			ImageTrim
+			PixelTester
 		)
 		
 		for (processor in processors) {
 			image = processor.process(image)
 		}
 		
-		
-		val output = File("output.png")
-		ImageIO.write(image, "png", output)
+		return image
 	}
 	
 	fun getPixelArray(image: BufferedImage): Array<IntArray> {
