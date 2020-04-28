@@ -5,6 +5,7 @@
 Initial:
 
 ![](https://i.binclub.dev/k9k4mat6.png)
+
 Binarization:
 
 ![](https://i.binclub.dev/k9k4n1su.png)
