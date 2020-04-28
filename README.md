@@ -1,12 +1,18 @@
 # ocr
 
-Preprocessors:
-- Black and White
-- Noise reduction
-- Trimming
+## Preprocessors
+Initial:
+![](https://i.binclub.dev/k9k4mat6.png)
+Binarization:
+![](https://i.binclub.dev/k9k4n1su.png)
+Noise Reduction:
+![](https://i.binclub.dev/k9k4n9oz.png)
 
-## TODO
-https://codereview.stackexchange.com/questions/79822/reading-and-writing-of-pixels-of-bufferedimages
-Improve speed
+## Recognition:
+out11.png:
+![](https://i.binclub.dev/k9k4pjw3.png)
+Output:
+![](https://i.binclub.dev/k9k4q5gr.png)
 
-Rewrite noise reduction algorithm to detect groups of pixels and singular pixels
+## GUI:
+![](https://i.binclub.dev/k9k4qn2y.png)
