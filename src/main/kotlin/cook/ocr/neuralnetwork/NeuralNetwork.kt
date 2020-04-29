@@ -85,20 +85,6 @@ object NeuralNetwork {
 				.activation(Activation.SOFTMAX)
 				.weightInit(WeightInit.XAVIER)
 				.build())
-			/*.layer(0, DenseLayer.Builder()
-					.nIn(rows * columns) // datapoints in = number of pixels in image
-					.nOut(1000) // 1000 out datapoints, fed to second layer
-					.activation(Activation.RELU)
-					.weightInit(WeightInit.XAVIER)
-					.build()
-			)
-			.layer(1, OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
-					.nIn(1000) // number of in datapoints, comes from first layers
-					.nOut(numClasses) // out datapoints = number of classes
-					.activation(Activation.SOFTMAX)
-					.weightInit(WeightInit.XAVIER)
-					.build()
-			)*/
 			.build()
 		
 		
@@ -139,42 +125,15 @@ object NeuralNetwork {
 	}
 	
 	fun processImage(file: File): Char {
-		//val eval = network.evaluate<Evaluation>(testIt)
-		//println(eval.stats(false, true))
-		
 		val img = NativeImageLoader(28, 28, 1).asMatrix(file)
 		val output = network.output(img.reshape(intArrayOf(1, 28*28)))
-		println(buildString {
-			append('[')
-			for (x in 0 until output.size(1)) {
-				when (val v = output.getRow(0).getDouble(x)) {
-					0.0 -> append('0')
-					1.0 -> append('1')
-					else -> append(v)
-				}
-				if (x < output.size(1) - 1) {
-					append(", ")
-				}
-			}
-			append(']')
-		})
+		println(output)
 		println(labels.contentToString())
 		val result = Nd4j.getExecutioner().execAndReturn(IMax(output)).finalResult.toInt()
 		return labels[result]
 	}
 	
 	fun processImage(image: BufferedImage): Char {
-		//println("Labels: ${trainIt.labelsArrays.contentToString()}")
-		//val eval = network.evaluate<Evaluation>(testIt)
-		//println(eval.stats(false, true))
-		
-		//for (dataset in trainIt) {
-		//	for ((i, set) in dataset.withIndex()) {
-		//		val features = set.features
-		//		printImage(features, i)
-		//	}
-		//}
-		
 		val scaled = image.getScaledInstance(28, 28, Image.SCALE_DEFAULT).convertToBufferedImage()
 		
 		for (x in 0 until scaled.width) {
@@ -186,9 +145,6 @@ object NeuralNetwork {
 		}
 		
 		val matrix = Java2DNativeImageLoader(28, 28, 1).asMatrix(scaled)
-		//printImage(matrix)
-		//ImagePreProcessingScaler(0.0, 1.0).transform(matrix) // 2 channel matrix
-		//printImage(matrix)
 		
 		val input = matrix.reshape(intArrayOf(1, 28*28))
 		//printImage(input)
