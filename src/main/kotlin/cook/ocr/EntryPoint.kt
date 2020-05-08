@@ -17,15 +17,16 @@ fun main(args: Array<String>) {
 		Gui.show()
 	} else if (args[0] == "train") {
 		NeuralNetwork.run()
+	} else if (args[0] == "preprocess") {
+		ImageIO.write(
+			CharacterRecognition.preprocess(
+				ImageIO.read(File(args[1]))
+			),
+			"png",
+			File("output.png")
+		)
 	} else {
 		NeuralNetwork.processImage(File(args[0]))
 	}
 	return
-	
-	
-	val file = File(args[0])
-	if (!file.exists())
-		throw RuntimeException("File not found")
-	
-	CharacterRecognition.preprocess(ImageIO.read(file))
 }

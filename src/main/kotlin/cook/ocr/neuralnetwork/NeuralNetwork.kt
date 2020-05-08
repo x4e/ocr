@@ -124,14 +124,7 @@ object NeuralNetwork {
 		println("\tAv: $av")
 	}
 	
-	fun processImage(file: File): Char {
-		val img = NativeImageLoader(28, 28, 1).asMatrix(file)
-		val output = network.output(img.reshape(intArrayOf(1, 28*28)))
-		println(output)
-		println(labels.contentToString())
-		val result = Nd4j.getExecutioner().execAndReturn(IMax(output)).finalResult.toInt()
-		return labels[result]
-	}
+	fun processImage(file: File): Char = processImage(ImageIO.read(file))
 	
 	fun processImage(image: BufferedImage): Char {
 		val scaled = image.getScaledInstance(28, 28, Image.SCALE_DEFAULT).convertToBufferedImage()
