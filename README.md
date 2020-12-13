@@ -4,25 +4,22 @@
 
 Initial:
 
-![](https://i.binclub.dev/k9k4mat6.png)
+![](https://i.imgur.com/1YVnh3D.png)
 
 Binarization:
 
-![](https://i.binclub.dev/k9k4n1su.png)
+![](https://i.imgur.com/tdINsdK.png)
 
 Noise Reduction:
 
-![](https://i.binclub.dev/k9k4n9oz.png)
+![](https://i.imgur.com/OBO0VW3.png)
+
+## Training:
+
+![](https://i.imgur.com/q4jVGgG.png)
 
 ## Recognition:
-out11.png:
-
-![](https://i.binclub.dev/k9k4pjw3.png)
 
 Output:
 
-![](https://i.binclub.dev/k9k4q5gr.png)
-
-## GUI:
-
-![](https://i.binclub.dev/k9k4qn2y.png)
+![](https://i.imgur.com/S6L7xtd.png)
