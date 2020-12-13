@@ -6,11 +6,11 @@ Initial:
 
 ![](https://i.imgur.com/1YVnh3D.png)
 
-Binarization:
+Binarization (https://github.com/x4e/ocr/blob/master/src/main/kotlin/cook/ocr/preprocessors/BWConversion.kt):
 
 ![](https://i.imgur.com/tdINsdK.png)
 
-Noise Reduction:
+Noise Reduction (https://github.com/x4e/ocr/blob/master/src/main/kotlin/cook/ocr/preprocessors/NoiseReduction.kt):
 
 ![](https://i.imgur.com/OBO0VW3.png)
 
